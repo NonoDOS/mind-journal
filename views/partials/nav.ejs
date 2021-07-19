@@ -8,8 +8,8 @@
     <img src= "">
     <a href="/journals"> <%- title === 'All Journals' ? 'class="active"' : '' %>>ALL JOURNALS</a>
     <% if (user) { %>
-      <a href="/texts/new"	<%- title === 'Add Text' ? 'class="active"' : '' %>>
-        ADD TEXT</a>
+      <a href="/comments/new"	<%- title === 'Add Comment' ? 'class="active"' : '' %>>
+        ADD COMMENT</a>
         <a href="/journals/new" <%- title === 'Add Journal' ? 'class="active"' : '' %>>ADD JOURNAL</a>
       <a href="/auth/logout">
         <button type="submit">Logout</button>

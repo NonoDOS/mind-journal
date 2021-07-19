@@ -47,7 +47,7 @@ function index(req, res) {
   }
 
   function show(req, res) {
-    Journal.findById(req.params.journal)
+    Journal.findById(req.params.journalId)
     .populate("owner")
     .then(journal => {
       res.render('journals/show', {

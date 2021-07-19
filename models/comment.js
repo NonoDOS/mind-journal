@@ -5,7 +5,10 @@ export {
 }
 
 const commentSchema = new mongoose.Schema({
-  name: {type: String, unique: true}
+  content: String,
+  CommtextEntry: {type: String},
+}, {
+  timestamps: true
 })
 
 const Comment = mongoose.model("Comment", commentSchema)
