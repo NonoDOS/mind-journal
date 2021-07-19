@@ -5,9 +5,9 @@ export {
   create,
   show,
   flipInteresting,
-//   edit,
-//   update,
-//   deleteJournal as delete,
+  edit,
+  update,
+  deleteJournal as delete,
 }
 
 function index(req, res) {
@@ -67,6 +67,19 @@ function index(req, res) {
     })
   }
 
+  function edit(req, res) {
+    Journal.findById(req.params.id)
+    .then(journal => {
+      res.render('journals/edit', {
+        journal,
+        title: "edit Journal"
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/journals')
+    })
+  }
   function update(req, res) {
     Journal.findById(req.params.id)
     .then(journal => {
@@ -83,5 +96,23 @@ function index(req, res) {
     .catch(err => {
       console.log(err)
       res.redirect(`/journals`)
+    })
+  }
+
+  function deleteJournal(req, res) {
+    Journal.findById(req.params.id)
+    .then(journal => {
+      if (journal.owner.equals(req.user.profile._id)) {
+        journal.delete()
+        .then(() => {
+          res.redirect('/journals')
+        })
+      } else {
+        throw new Error ('🚫 Not authorized 🚫')
+      }   
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/journals')
     })
   }
