@@ -1,3 +1,6 @@
+import {Router} from 'express'
+import * as journalsCtrl from '../controllers/journals.js'
+
 export {
     router
   }
