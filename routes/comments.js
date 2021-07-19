@@ -8,6 +8,6 @@ export {
 const router = Router()
 
 //localhost:3000/comments/new
-router.get("/new", isLoggedIn, commentsCtrl.new)
+router.get("/new", commentsCtrl.new)
 //localhost:3000/comments
-router.post("/", isLoggedIn, commentsCtrl.create)
+router.post("/", commentsCtrl.create)

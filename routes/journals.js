@@ -1,11 +1,10 @@
 import {Router} from 'express'
+const router = Router()
 import * as journalsCtrl from '../controllers/journals.js'
 
 export {
     router
   }
-  
-  const router = Router()
   
   router.get("/", journalsCtrl.index)
   router.get("/new", journalsCtrl.new)
@@ -16,10 +15,11 @@ export {
   router.delete("/:id", isLoggedIn, journalsCtrl.delete)
   router.put("/:id/flip-interesting", isLoggedIn, journalsCtrl.flipInteresting)
 
-  router.post("/:id/comment",  isLoggedIn, journalsCtrl.addComment)
+  router.post("/:id/comment", isLoggedIn, journalsCtrl.addComment)
   
   router.delete('/:id/texts',  isLoggedIn, journalsCtrl.delText)
   router.post('/:id/texts', isLoggedIn, journalsCtrl.addText)
+  
 // Insert this middleware for routes that require a logged in user
    function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) return next()

@@ -45,8 +45,7 @@
     </ul>
   </section>
 
-  <h2>Comment</h2>
-
+  <!-- <h2>comments</h2> -->
   <form
   id="add-comment"
   action="/journals/<%= journal._id %>/comments"
@@ -97,6 +96,30 @@
   <% } else { %>
     <h3>No Text Yet</h3>
   <% } %>
+  <section>
+    <p>From the Library of <%= journal.owner.name %>...</p>
+    <h2><%= journal.name %> </h2>
+    <h3>This journal is <%= journal.interesting ? 'interesting! 😋' : 'not interesting! 😫' %></h3>
+    <% if (user) { %>
+      <form action="/journals/<%= journal._id %>/flip-interesting?_method=PUT" method="POST">
+        <button type="submit">
+          Make journal <%= journal.interesting ? 'not interesting 🥺' : 'interesting 🎉' %>
+        </button>
+      </form>
+    <% } %>
+    <% if (journal.owner.equals(user?.profile._id)) { %>
+      <p>
+        <a class="link" href="/journals/<%= journal._id %>/edit">Edit this journal!</a>
+      </p>
+      <p>
+        <form action="/journals/<%= journal._id %>?_method=DELETE" method="POST">
+          <button type="submit">
+            Delete this journal 💀
+          </button>
+        </form>
+      </p>
+    <% } %>
+  </section>
   </main>
 
 <%- include('../partials/footer') %>

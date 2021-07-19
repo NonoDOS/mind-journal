@@ -25,8 +25,12 @@ const journalSchema = new Schema({
     type:[textSchema]
     },
 
-  comments:{type:[mongoose.Schema.Types.ObjectID],
-    ref:"Comment"},
+  comments: [ 
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }
+   ]
 
   }, {
   timestamps: true,

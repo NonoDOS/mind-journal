@@ -11,7 +11,19 @@ export {
   deleteJournal as delete,
   addText,
   delText,
+  addComment,
+
 }
+
+function addComment(req,res){
+  Journal.findById(req.params.id, function(err, journal) {
+    journal.comments.push(req.body.commentId)
+    journal.save(function(err) {
+      res.redirect(`/journals/${journal._id}`)
+    })
+  })
+}
+
 
 function index(req, res) {
     Journal.find({})

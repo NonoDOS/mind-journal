@@ -1,11 +1,10 @@
 import { Router } from 'express'
+const router = Router()
 
 export {
   router
 }
 
-const router = Router()
-router.get('/', function (req, res) {
+router.get('/', function (req, res,next) {
   res.render('index', { title: 'Home Page', user: req.user ? req.user : null })
 })
-
