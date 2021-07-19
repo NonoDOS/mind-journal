@@ -4,8 +4,13 @@
 </head>
 <body>
   <nav>
-    <a href="/journals"><i class="fa fa-book" aria-hidden="true"></i> fa-3x &nbsp; journals</a></a>
+    <i class="fas fa-plane-departure"></i> 
+    <img src= "">
+    <a href="/journals"> <%- title === 'All Journals' ? 'class="active"' : '' %>>ALL JOURNALS</a>
     <% if (user) { %>
+      <a href="/texts/new"	<%- title === 'Add Text' ? 'class="active"' : '' %>>
+        ADD TEXT</a>
+        <a href="/journals/new" <%- title === 'Add Journal' ? 'class="active"' : '' %>>ADD JOURNAL</a>
       <a href="/auth/logout">
         <button type="submit">Logout</button>
       </a>

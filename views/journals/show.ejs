@@ -1,29 +1,102 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/journals/show.css" />
 <%- include('../partials/nav') %>
 
-<section>
-	<p>From the Library of <%= journal.owner.name %>...</p>
-  <h1><%= journal.name %> 🌮</h1>
-  <h2>This journal is <%= journal.interesting ? 'interesting! 😋' : 'not interesting! 😫' %></h2>
-  <% if (user) { %>
-    <form action="/journals/<%= journal._id %>/flip-interesting?_method=PUT" method="POST">
-      <button type="submit">
-        Make journal <%= journal.interesting ? 'not interesting 🥺' : 'interesting 🎉' %>
-      </button>
-    </form>
-    <% } %>
-    <% if (journal.owner.equals(user?.profile._id)) { %>
-      <p>
-        <a class="link" href="/journals/<%= journal._id %>/edit">Edit this journal!</a>
-      </p>
-      <p>
-        <form action="/journals/<%= journal._id %>?_method=DELETE" method="POST">
+<main>
+  <h1> Journal Details</h1>
+  <section>
+      <div>Title:</div>
+      <div><%=journal.title%></div>
+      <div>Date:</div>
+      <div><%=journal.date%></div>
+      <div>Interesting:</div>
+      <div> This journal is <%= journal.interesting ? 'interesting! 😋' : 'not interesting! 😫' %> </div>
+        <% if (user) { %>
+        <form action="/journals/<%= journal._id %>/flip-interesting?_method=PUT" method="POST">
           <button type="submit">
-            Delete this journal 💀
+            Make journal <%= journal.interesting ? 'not interesting 🥺' : 'interesting 🎉' %>
           </button>
         </form>
-      </p>
+        <% } %>
+        <% if (journal.owner.equals(user?.profile._id)) { %>
+          <p>
+            <a class="link" href="/journals/<%= journal._id %>/edit">Edit this journal!</a>
+          </p>
+          <p>
+            <form action="/journals/<%= journal._id %>?_method=DELETE" method="POST">
+              <button type="submit">
+                Delete this journal 💀
+              </button>
+            </form>
+          </p>
+        <% } %>
+
+      <div>Comment: </div>
+      <div><%=journal.comment%></div>
+
+      <ul>
+      <%let commEnt = [] %>
+      <% journal.comments.forEach(comm => { %>
+        <li>
+          <%commEnt.push(comm.comment) = [] %>
+          <%= comm.comment %>
+        </li>
+      <% }) %>
+    </ul>
+  </section>
+
+  <h2>Comment</h2>
+
+  <form
+  id="add-comment"
+  action="/journals/<%= journal._id %>/comments"
+  method="POST">
+   
+    <select name="commentId">
+    <% commNotIncomms.forEach(comment => { %>
+      <% if (!commEnt.includes(comment.comment)) { %>
+      <option value="<%= comment._id %>"><%= comment.comment%></option>
     <% } %>
-</section>
+    <% }) %>
+  </select>
+  <button type="submit">Add to comment</button>
+  </form>
+
+  <h3>Add New Texts</h3>
+  <form id = add-text-form action="/journals/<%= journal._id %>/texts" class="texts" method= "POST">
+    <label for="entry">Journal Entry:</label>
+    <input type="string" name="entry" placeholder="Enter text here" >
+    <button type="submit">Add Text</button>
+ 
+  </form>
+
+  <% if (journal.texts.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Journal Entry</th>
+        </tr>
+      </thead>
+      <tbody>
+       
+        <% journal.texts.forEach(function(text) { %>
+          <tr>
+            <td><%= text.createdAt.toLocaleDateString() %></td>
+            <td><%= text.entry %></td>
+            <td><form action = "/journal._id%>/<%= text._id %> text._id %>?_method-DELETE"
+            class="delete-form"
+            method="POST>
+          <button type="submit"></button>
+          </form>
+          </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <h3>No Text Yet</h3>
+  <% } %>
+  </main>
 
 <%- include('../partials/footer') %>

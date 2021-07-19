@@ -1,0 +1,48 @@
+<%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/comments/new.css" />
+<%- include('../partials/nav') %>
+
+<main>
+  <h1><%= title %></h1>
+  <p>Please first ensure that the comment is not in the dropdown
+    <select>
+      <% comments.forEach(function(comment) { %> 
+        <option><%= comment.textn %> </option>
+      <% }) %> 
+    </select>
+  </p>
+
+  <form id="add-comment-form" action="/comments" method="POST">
+    <label for="airport-input">Airport:</label>
+    <input type="text" name="airport" id="airport-input" placeholder="Enter comment here">
+    <button type="submit">Add comment</button>
+</div>
+</form>
+<% if (err) { %>
+  <p>Hey! That textn already exists! Please enter a new one.</p>
+  <% } %>  
+  <div>
+    <p>Please first ensure that the textn is not already listed below:
+      <table>
+        <% let counter = 0 %> 
+        <% comments.forEach(function(comment) { %>
+          <% if (counter === 3){ %>
+            <tr>
+            </tr>
+              <td>
+                <%= comment.comment %>
+              </td>
+          <% counter = 1 %> 
+          <% } else { %>  
+          <td>
+            <%= comment.comment %>
+          </td>
+          <% counter++ %> 
+          <% } %> 
+        <% }) %>
+        </table>
+    </p>
+  </div>
+</main>
+
+<%- include("../partials/footer") %> 

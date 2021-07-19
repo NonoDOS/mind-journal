@@ -1,14 +1,44 @@
 <%- include('../partials/html-head') %>
 <%- include('../partials/nav') %>
-
+<main>
 <section>
   <h1>Mind Journal</h1>
   <h2>All the journals!</h2>
+  <table id="list">
+  </thead>
+  <tbody>
+    <% journals.forEach((journal) => { %>
+    <tr>
+      <td><%= journal.title %></td>
+      <td><%= journal.date%></td>
+      <td><%= journal.interesting%></td>
+      <td><%= journal.texts%></td>
+
+      <td><a href="/journals/<%= journal._id %>">DETAILS</a></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
 	<ul>
   <% journals.forEach(journal => { %>
-    <li>Journal <%= journal.name %> is <%= journal.tasty ? 'tasty' : 'not tasty' %></li>
+   <a>
+     <li>Journal <%= journal.title %> is <%= journal.interesting ? 'interesting' : 'not interesting' %></li></a>
   <% }) %>
   </ul>
+  <% if (user) { %>
+    <h2>Add a Journal!</h2>
+    <form action="/journals" method="POST">
+      <label>
+        Name: 
+        <input type="text" name="name" autocomplete="off">
+      </label>
+      <label>
+        interesting?
+        <input type="checkbox" name="interesting">
+      </label>
+      <button type="submit">Add Journal</button>
+    </form>
+  <% } %>
 </section>
-
+</main>
 <%- include('../partials/footer') %>

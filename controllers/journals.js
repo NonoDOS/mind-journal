@@ -2,12 +2,15 @@ import { Journal } from '../models/journal.js'
 
 export {
   index,
+  newJournal as new,
   create,
   show,
   flipInteresting,
   edit,
   update,
   deleteJournal as delete,
+  addText,
+  delText,
 }
 
 function index(req, res) {
@@ -21,6 +24,12 @@ function index(req, res) {
     .catch(err => {
       console.log(err)
       res.redirect("/journals")
+    })
+  }
+
+  function newJournal(req,res){
+    res.render("journals/new", {
+      title: "Add Journal",
     })
   }
 
@@ -38,11 +47,11 @@ function index(req, res) {
   }
 
   function show(req, res) {
-    Journal.findById(req.params.JournalId)
+    Journal.findById(req.params.journal)
     .populate("owner")
-    .then(Journal => {
-      res.render('Journals/show', {
-        Journal,
+    .then(journal => {
+      res.render('journals/show', {
+        journal,
         title: "Journal show"
       })
     })
@@ -101,6 +110,33 @@ function index(req, res) {
 
   function deleteJournal(req, res) {
     Journal.findById(req.params.id)
+    .then(journal => {
+      if (journal.owner.equals(req.user.profile._id)) {
+        journal.delete()
+        .then(() => {
+          res.redirect('/journals')
+        })
+      } else {
+        throw new Error ('🚫 Not authorized 🚫')
+      }   
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/journals')
+    })
+  }
+
+
+function addText(req, res, next) {
+  Journal.findById(req.user.journalProfile._id, function(err, journal){
+    journal.texts.push(req.body)
+    journal.save(function (err){
+      res.redirect('/journals')
+    })
+  })
+}
+function delText(req, res, next) {
+  Journal.findById(req.params.id)
     .then(journal => {
       if (journal.owner.equals(req.user.profile._id)) {
         journal.delete()

@@ -5,10 +5,32 @@ export {
   Journal
 }
 
-const journalSchema = new Schema({
-  name: String,
-  tasty: Boolean,
-  owner: {type: mongoose.Schema.Types.ObjectId, ref: "Profile", required: true}
+const textSchema = new Schema({
+  content: String,
+  entry: {type: String},
+}, {
+  timestamps: true
 })
 
-const journal = mongoose.model("Journal", journalSchema)
+const journalSchema = new Schema({
+  title: String,
+  date:{type: Date,
+  default: function() {
+    return new Date().getDate()
+   }
+  },
+  interesting: {type: Boolean},
+  owner: {type: mongoose.Schema.Types.ObjectId, ref: "Profile", required: true},
+  texts: {
+    type:[textSchema]
+    },
+
+  comments:{type:[mongoose.Schema.Types.ObjectID],
+    ref:"Comment"},
+
+  }, {
+  timestamps: true,
+  })
+
+
+const Journal = mongoose.model("Journal", journalSchema)

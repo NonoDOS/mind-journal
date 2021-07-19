@@ -1,0 +1,21 @@
+<%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/journals/new.css" />
+<%- include('../partials/nav') %>
+
+<main>
+  <h1><%= title %></h1>
+  <form id="new-form" action="/journals" method="POST">
+    <label for="Title-input">Title:</label>
+    <input type="string" name="Title" id="Title-input">
+  
+    <label for="Date-input">Date:</label>
+    <input type="date" name="Date-input" id="date">
+    </br>
+    <label for="text-input">Texts</label>
+    <input type="string" name="text-input" id="texts"placeholder="Enter your Journal Entry here">
+
+    <button type="submit">Add journal</button>
+  </form>
+</main>
+
+<%- include("../partials/footer") %>
