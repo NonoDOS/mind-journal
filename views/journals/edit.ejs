@@ -1,16 +1,28 @@
-<%- include('./partials/html-head') %>
-<%- include('./partials/nav') %>
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
 
-<main>
-  <h1>hello, <%= user ? user.profile.name : "friend" %></h1>
-  <% if (user?.profile.avatar) { %>
-    <div>
-      <img 
-        src="<%= user.profile.avatar %>" 
-        alt="<%= user.profile.name %> avatar"
+<section>
+  <h1>Edit the journal! </h1>
+  <form action="/journals/<%= journal._id %>?_method=PUT" method="POST">
+    <label>
+      Name: 
+      <input 
+        type="text"
+        name="name" 
+        value="<%= journal.name %>" 
+        autocomplete="off"
       >
-    </div>
-  <% } %>
-</main>
+    </label>
+    <!-- <label>
+      Tasty?
+      <input 
+        type="checkbox" 
+        name="tasty" 
+				<%= journal.tasty ? "checked" : "" %> 
+      >
+    </label> -->
+    <button type="submit">Edit the Journal</button>
+  </form>
+</section>
 
-<%- include('./partials/footer') %>
+<%- include('../partials/footer') %>

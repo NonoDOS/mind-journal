@@ -4,7 +4,7 @@ export {
   index,
   create,
   show,
-//   flipTasty,
+  flipInteresting,
 //   edit,
 //   update,
 //   deleteJournal as delete,
@@ -15,7 +15,7 @@ function index(req, res) {
     .then(journals => {
       res.render("journals/index", {
         journals,
-        title: "🌮"
+        title: "Journal"
       })
     })
     .catch(err => {
@@ -26,7 +26,7 @@ function index(req, res) {
 
   function create(req, res) {
     req.body.owner = req.user.profile
-    req.body.tasty = !!req.body.tasty
+    req.body.interesting = !!req.body.interesting
     Journal.create(req.body)
     .then(journal => {
       res.redirect('/journals')
@@ -43,11 +43,45 @@ function index(req, res) {
     .then(Journal => {
       res.render('Journals/show', {
         Journal,
-        title: "🌮 show"
+        title: "Journal show"
       })
     })
     .catch(err => {
       console.log(err)
       res.redirect('/Journals')
+    })
+  }
+
+  function flipInteresting(req, res) {
+    Journal.findById(req.params.id)
+    .then(journal => {
+      journal.interesting = !journal.interesting
+      journal.save()
+      .then(()=> {
+        res.redirect(`/journals/${journal._id}`)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/journals')
+    })
+  }
+
+  function update(req, res) {
+    Journal.findById(req.params.id)
+    .then(journal => {
+      if (journal.owner.equals(req.user.profile._id)) {
+        req.body.interesting = !!req.body.interesting
+        journal.update(req.body, {new: true})
+        .then(()=> {
+          res.redirect(`/journals/${journal._id}`)
+        })
+      } else {
+        throw new Error ('🚫 Not authorized 🚫')
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect(`/journals`)
     })
   }

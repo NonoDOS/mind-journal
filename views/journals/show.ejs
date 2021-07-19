@@ -1,0 +1,29 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<section>
+	<p>From the Library of <%= journal.owner.name %>...</p>
+  <h1><%= journal.name %> 🌮</h1>
+  <h2>This journal is <%= journal.interesting ? 'interesting! 😋' : 'not interesting! 😫' %></h2>
+  <% if (user) { %>
+    <form action="/journals/<%= journal._id %>/flip-interesting?_method=PUT" method="POST">
+      <button type="submit">
+        Make journal <%= journal.interesting ? 'not interesting 🥺' : 'interesting 🎉' %>
+      </button>
+    </form>
+    <% } %>
+    <% if (journal.owner.equals(user?.profile._id)) { %>
+      <p>
+        <a class="link" href="/journals/<%= journal._id %>/edit">Edit this journal!</a>
+      </p>
+      <p>
+        <form action="/journals/<%= journal._id %>?_method=DELETE" method="POST">
+          <button type="submit">
+            Delete this journal 💀
+          </button>
+        </form>
+      </p>
+    <% } %>
+</section>
+
+<%- include('../partials/footer') %>
