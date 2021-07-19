@@ -1,0 +1,14 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<section>
+  <h1>Mind Journal</h1>
+  <h2>All the journals!</h2>
+	<ul>
+  <% journals.forEach(journal => { %>
+    <li>Journal <%= journal.name %> is <%= journal.tasty ? 'tasty' : 'not tasty' %></li>
+  <% }) %>
+  </ul>
+</section>
+
+<%- include('../partials/footer') %>
