@@ -15,7 +15,7 @@ export {
   router.delete("/:id", isLoggedIn, journalsCtrl.delete)
   router.put("/:id/flip-interesting", isLoggedIn, journalsCtrl.flipInteresting)
 
-  router.post("/:id/comment", isLoggedIn, journalsCtrl.addComment)
+  router.post("/:id/comments", isLoggedIn, journalsCtrl.addComment)
   
   router.delete('/:id/texts',  isLoggedIn, journalsCtrl.delText)
   router.post('/:id/texts', isLoggedIn, journalsCtrl.addText)

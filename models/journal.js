@@ -4,6 +4,11 @@ const Schema = mongoose.Schema
 export {
   Journal
 }
+const commentSchema = new Schema({
+  content: {type:String},
+  textEntry: {type: String},
+}, {
+  timestamps: true})
 
 const textSchema = new Schema({
   content: String,
@@ -25,13 +30,11 @@ const journalSchema = new Schema({
     type:[textSchema]
     },
 
-  comments: [ 
+  comments: 
     {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment'
-    }
-   ]
-
+        type:[commentSchema]
+    },
+   
   }, {
   timestamps: true,
   })

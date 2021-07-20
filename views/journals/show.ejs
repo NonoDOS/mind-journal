@@ -50,14 +50,9 @@
   id="add-comment"
   action="/journals/<%= journal._id %>/comments"
   method="POST">
-   
-    <select name="commentId">
-    <% commNotIncomms.forEach(comment => { %>
-      <% if (!commEnt.includes(comment.comment)) { %>
-      <option value="<%= comment._id %>"><%= comment.comment%></option>
-    <% } %>
-    <% }) %>
-  </select>
+  <label for="CommtextEntry-input">CommtextEntry:</label>
+  <input type="text" name="CommtextEntry" id="CommtextEntry-input" placeholder="Enter comment here">
+  
   <button type="submit">Add to comment</button>
   </form>
 
